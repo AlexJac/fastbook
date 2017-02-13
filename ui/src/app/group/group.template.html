@@ -1,0 +1,65 @@
+<div flex layout="row" layout-padding>
+  <md-card flex flex-gt-xs="25" layout-padding>
+    <h2>{{$group.profileGroup.name}}</h2>
+    <md-divider></md-divider>
+    <md-card-content layout="column" layout-padding>
+    <!--  <p>Group Owner:<br>
+        {{$group.groupOwner.firstName}} {{$group.groupOwner.lastName}}</p> -->
+      <md-button class="md-raised md-primary" ng-click="$group.joinGroup()">Join Group</md-button>
+    </md-card-content>
+  </md-card>
+
+    <md-card flex flex-gt-xs="45" layout-padding>
+      <h2>Group Timeline</h2>
+      <md-divider></md-divider>
+      <md-input-container>
+        <label>Post something to the group...</label>
+        <textarea maxlength="140" ng-model="$group.groupPostObject.text" rows="8" cols="40"></textarea>
+      </md-input-container>
+      <md-button class="md-raised" aria-label="Submit" ng-click="$group.post()">Post</md-button>
+      <md-divider></md-divider>
+      <md-card-content layout="column">
+        <md-virtual-repeat-container flex style="height: 800vh;">
+          <div md-virtual-repeat="entry in $group.posts" class="repeated-item-vertical" style="padding-bottom: 5px;">
+            <p flex style="font-size: 12dp;">
+
+              <b>
+                <a ui-sref="profile({id: entry.post.user.id})">
+                  {{entry.post.user.firstName}} {{entry.post.user.lastName}}
+                </a>
+
+                <img ng-src="${require(`like.jpg`)}"/> {{entry.likeCount}}
+                <md-button class="md-raised" ng-click="LIKEPOST" ng-if="!entry.status">
+                  <img ng-src="${require(`like.jpg`)}"/> Like
+                </md-button>
+
+                <img ng-src="${require(`Check_Mark.png`)}" ng-if="entry.status"/>
+              </b>
+              </br>
+              {{entry.post.text}}
+              </br>
+            </p>
+
+            <p flex style="font-size: 10px; font-style: italic;">
+              {{entry.post.timestamp | date: "EEE, MMM d, yyyy 'at' h:mm a"}}
+            </p>
+              <!-- <a ui-sref="profile({id: user.id})" style="display: block; padding-top: 5px; padding-bottom: 5px;">{{user.firstName}} {{user.lastName}}</a> -->
+            <md-divider style="padding-top: 5px; padding-bottom: 5px;"></md-divider>
+          </div>
+        </md-virtual-repeat-container>
+    </md-card-content>
+  </md-card>
+
+  <md-card flex flex-gt-xs="30" layout-padding>
+    <h2>Group Members</h2>
+    <md-divider></md-divider>
+    <md-card-content layout="column">
+      <md-virtual-repeat-container flex style="height: 100vh;">
+        <div md-virtual-repeat="user in $group.groupMembers" class="repeated-item-vertical" style="padding-top: 5px; padding-bottom: 5px; height: 30px;">
+          <a ui-sref="profile({id: user.id})" style="display: block; padding-top: 5px; padding-bottom: 5px;"><b>{{user.firstName}} {{user.lastName}}</b></a>
+          <md-divider style="padding-top: 5px; padding-bottom: 5px;"></md-divider>
+        </div>
+      </md-virtual-repeat-container>
+    </md-card-content>
+  </md-card>
+</div>

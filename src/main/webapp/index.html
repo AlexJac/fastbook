@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html ng-app="fastbook" lang="en">
+<head>
+<title>fastbook</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Angular Material style sheet -->
+<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic' type='text/css'>
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+<link rel="stylesheet" href="/bundled/app.css">
+<script src="/bundled/app.js"></script>
+
+<base href="/fastbook/" />
+</head>
+
+<body ng-cloak>
+
+    <md-toolbar class="row" ng-controller="AppController as app" style="box-shadow: 2px 2px 5px #888888;">
+      <div class="md-toolbar-tools">
+
+        <h1>
+          Fastbook
+        </h1>
+
+        <md-divider></md-divider>
+
+        <md-button class="md-raised" aria-label="Profile" ng-click="$state.go('profile', {id: app.accessService.currentUser.id})" ng-if="app.accessService.isLoggedIn()">
+          Profile
+        </md-button>
+
+        <md-button class="md-raised" aria-label="Friend Requests" ng-click="$state.go('friendRequests', {id: app.accessService.currentUser.id})" ng-if="app.accessService.isLoggedIn()">
+          Friend Requests
+        </md-button>
+
+        <span flex></span>
+
+        <div class="centered row" ng-controller="NavController as nav">
+          <div>
+            <input type="text" placeholder="Search" ng-model="nav.userName" ng-if="app.accessService.isLoggedIn()">
+          </div>
+          <md-button class="md-raised" aria-label="Submit" ng-click="nav.searchNames(); nav.userName = null;" ng-if="app.accessService.isLoggedIn()">
+            Submit
+          </md-button>
+        </div>
+
+        <span flex></span>
+
+        <h3 ng-if="app.accessService.isLoggedIn()" style="font-size: 14dp; float: right; text-align: right; margin-right: 5px;">
+          Logged in as:<br>{{app.accessService.currentUser.firstName}} {{app.accessService.currentUser.lastName}}
+        </h3>
+
+        <md-button class="md-raised" aria-label="Login" ng-click="$state.go('login')" ng-if="app.accessService.isLoggedOut()">
+          Login
+        </md-button>
+
+        <md-button class="md-raised" aria-label="Logout" ng-click="app.accessService.logout()" ng-if="app.accessService.isLoggedIn()">
+          Logout
+        </md-button>
+
+        <md-button class="md-raised" aria-label="Register" ng-click="$state.go('register')" ng-if="app.accessService.isLoggedOut()">
+          Register
+        </md-button>
+
+      </div>
+    </md-toolbar>
+
+<div ui-view>
+</div>
+
+</body>
+</html>

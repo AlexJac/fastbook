@@ -1,0 +1,24 @@
+<md-content>
+  <div layout="row centered" layout-padding>
+
+    <div flex layout="column" layout-padding style="height: 100vh;">
+      <h2>Users</h2>
+      <md-divider></md-divider>
+      <md-virtual-repeat-container flex>
+        <div md-virtual-repeat="user in $nav.user.listOfUsers" class="repeated-item-vertical">
+          <a ui-sref="profile ({id: user.id})">{{user.firstName}} {{user.lastName}}</a>
+        </div>
+      </md-virtual-repeat-container>
+    </div>
+
+    <div flex layout="column" layout-padding style="height: 100vh;">
+      <h2>Groups</h2>
+      <md-divider></md-divider>
+      <md-virtual-repeat-container flex>
+        <div md-virtual-repeat="group in $nav.group.listOfGroups" class="repeated-item-vertical">
+          <a ui-sref="group({groupId: group.id})" style="text-decoration: none;">{{group.name}}</a>
+        </div>
+      </md-virtual-repeat-container>
+    </div>
+  </div>
+</md-content>
